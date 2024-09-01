@@ -31,6 +31,7 @@ public class Unit : MonoBehaviour
           gatheredAmount = 0f;
           isCarryingResource = false;
           agent = GetComponent<NavMeshAgent>();
+
           
      }
      void Awake()
@@ -61,6 +62,8 @@ public class Unit : MonoBehaviour
      void ToBase()
      {
           PathFinding(Base.transform.position);
+
+
           
      }
      /// <summary>
@@ -83,12 +86,15 @@ public class Unit : MonoBehaviour
                     {
                          gatheredAmount = 0;
                          isCarryingResource = false;
+
+
                     }
                }
                else
                {
                     //Go to Base
                     ToBase();
+
                }
           }
           else
@@ -149,12 +155,14 @@ public class Unit : MonoBehaviour
      public bool RequestDepositResource(GameObject baseObject, float amount)
      {
           return baseObject.GetComponent<Base>().DepositResource(amount);
+
      }
      
      public void PathFinding(Vector3 destination)
      {
           //PathFinding Algorithm
           //Using NavMeshAgent
+
 
           agent.SetDestination(destination);
 
