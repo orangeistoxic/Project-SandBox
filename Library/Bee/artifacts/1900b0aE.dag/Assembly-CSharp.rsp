@@ -359,6 +359,7 @@
 "Assets/Scripts/Base.cs"
 "Assets/Scripts/Resource.cs"
 "Assets/Scripts/Unit.cs"
+"Assets/Scripts/WEM.cs"
 -langversion:9.0
 /deterministic
 /optimize+

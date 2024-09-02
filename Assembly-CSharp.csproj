@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\Resource.cs" />
     <Compile Include="Assets\Scripts\Base.cs" />
     <Compile Include="Assets\Scripts\Unit.cs" />
+    <Compile Include="Assets\Scripts\WEM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

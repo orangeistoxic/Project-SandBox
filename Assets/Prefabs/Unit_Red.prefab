@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: -7805700434214008825}
   m_Layer: 7
   m_Name: Unit_Red
-  m_TagString: Untagged
+  m_TagString: R_Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

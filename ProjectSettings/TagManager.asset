@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Resource
+  - Base
+  - B_Base
+  - R_Base
+  - B_Unit
+  - R_Unit
+  - WorldEventManager
   layers:
   - Default
   - TransparentFX

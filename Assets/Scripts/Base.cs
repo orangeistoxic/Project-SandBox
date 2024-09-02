@@ -16,17 +16,17 @@ public class Base : MonoBehaviour
     private int faction;
     private float storedResource;
     private float unitCost;
-    private float reachResourceRange;
+    private float territoryRadius;
     private int numGatherer;
     private int numFighter;
     private int numSentinel;
     private float operationRange;
-
     private float spawnTimer;
 
     public GameObject unit;
     private List<GameObject> resourceList ;
     public GameObject dotForRange;
+    public GameObject WEM;
 
     public void BasicStatInit()
     {
@@ -44,7 +44,7 @@ public class Base : MonoBehaviour
         }
         storedResource = 10f;
         unitCost = 10f;
-        reachResourceRange = 30f;
+        territoryRadius = 30f;
         numGatherer = 0;
         numFighter = 0;
         numSentinel = 0;
@@ -52,13 +52,6 @@ public class Base : MonoBehaviour
         spawnTimer = 0f;
         resourceList = new List<GameObject>();
 
-    }
-
-    void Awake()
-    {
-        BasicStatInit();
-        LocateReachableResource();
-        
         switch (faction)
         {
             case 0:
@@ -72,7 +65,16 @@ public class Base : MonoBehaviour
             default:
                 break;
         }
-        ShowRange();
+
+        WEM = GameObject.Find("WorldEventManager");
+    }
+
+    void Awake()
+    {
+        BasicStatInit();
+        LocateReachableResource();
+    
+        ShowTerritory();
     }
 
     void Update()
@@ -84,16 +86,22 @@ public class Base : MonoBehaviour
 
     }
 
-    void ShowRange(){
+    /// <summary>
+    /// Territory Indicator for player to see the territory's range
+    /// </summary>
+    void ShowTerritory(){
         GameObject rangeIndicator = Instantiate(dotForRange,transform.position,Quaternion.identity);
-        rangeIndicator.transform.localScale = new Vector3(reachResourceRange,1,reachResourceRange);
+        rangeIndicator.transform.localScale = new Vector3(territoryRadius,1,territoryRadius);
     }
 
+    /// <summary>
+    /// detect all the resource within the territory,and store them in the resourceList
+    /// </summary>
     void LocateReachableResource(){
         GameObject[] potentialResource = GameObject.FindGameObjectsWithTag("Resource");
         foreach (var resource in potentialResource)
         {
-            if(Vector3.Distance(resource.transform.position,transform.position)<=reachResourceRange)
+            if(Vector3.Distance(resource.transform.position,transform.position) <= territoryRadius)
             {
                 resourceList.Add(resource);
             }
@@ -105,6 +113,7 @@ public class Base : MonoBehaviour
         if(storedResource>=unitCost && spawnTimer<=0){
             storedResource-=unitCost;
             unit.GetComponent<Unit>().Base = gameObject;
+            unit.GetComponent<Unit>().faction = faction;
             float x=UnityEngine.Random.Range(-spwanRange,spwanRange);
             float z=Mathf.Sqrt(spwanRange*spwanRange-x*x);
             if(UnityEngine.Random.value>0.5){
@@ -152,11 +161,11 @@ public class Base : MonoBehaviour
     {
         if(resourceList.Count == 0)
         {
-            return 3;
+            return 3; // Sentinel
         }
         else
         {
-            return 1;
+            return 1; // Gatherer
         }
     }
 
@@ -184,6 +193,11 @@ public class Base : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public float RequestTeritoryRadius()
+    {
+        return territoryRadius;
     }
 }
 
